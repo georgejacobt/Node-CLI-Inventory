@@ -161,6 +161,11 @@ var connection = mysql.createConnection({
     })
   }
 
+  function validateInput(input){
+    var reg = /^\d+$/;
+   return reg.test(input) || "Entry should be a number!";
+  }
+
   function checkData(){
       console.log('Add Inventory');
       inquirer
@@ -169,6 +174,7 @@ var connection = mysql.createConnection({
           type: 'name',
           name: 'id',
           message: 'Enter product id of product you would like to add more of?',
+          validate: validateInput
         },
       ])
       .then(answers => {
@@ -205,6 +211,7 @@ var connection = mysql.createConnection({
           type: 'name',
           name: 'quantity',
           message: 'How many units would you like to add..?',
+          validate: validateInput
         },
       ])
       .then(answers => {
@@ -244,4 +251,4 @@ var connection = mysql.createConnection({
   function addNewProduct(){
     console.log('Add New product');
   }
-})();
+})(); //Encapsulation by IIFE

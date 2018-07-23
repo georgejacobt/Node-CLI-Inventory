@@ -61,6 +61,12 @@ var connection = mysql.createConnection({
 
   }
 
+  function validateInput(input){
+    var reg = /^\d+$/;
+   return reg.test(input) || "Entry should be a number!";
+
+  }
+
   function showproducts(department){
     connection.query("SELECT * FROM products WHERE products.department_name = ?",[department], function(err, res) {
         if (err) throw err;
@@ -83,12 +89,14 @@ var connection = mysql.createConnection({
     {
       type: 'name',
       name: 'id',
-      message: 'Which product would you like to buy - enter product ID ?'
+      message: 'Which product would you like to buy - enter product ID ?',
+      validate: validateInput
     },
     {
         type: 'name',
         name: 'quantity',
-        message: 'Enter # units you wish to purchase ?'
+        message: 'Enter # units you wish to purchase ?',
+        validate: validateInput
       }
   ])
   .then(answers => {
@@ -176,7 +184,7 @@ var connection = mysql.createConnection({
         });
     }
 
-})();
+})(); //Encapsulation by IIFE
 
   
 
