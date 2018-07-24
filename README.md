@@ -1,5 +1,5 @@
 # bamazon
-A Node My SQL App
+A CLI Node My SQL App
 ## Features - Customer View
 * Customer abililty to view product by department in a tabular representation
 * Customer ability to purchase product via product id
