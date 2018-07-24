@@ -4,23 +4,25 @@
 var mysql = require("mysql");
 var inquirer = require('inquirer');
 var Table = require('cli-table');
+require('dotenv').config()
 
 // var ui = new inquirer.ui.BottomBar();
 
 
 var connection = mysql.createConnection({
-    host: "localhost",
-  
-    // Your port; if not 3306
-    port: 3307,
-  
-    // Your username
-    user: "root",
-  
-    // Your password
-    password: "mace00",
-    database: "bamazon"
-  });
+  host: process.env.DB_HOST,
+
+  // Your port; if not 3306
+  port: process.env.DB_PORT,
+
+  // Your username
+  user: process.env.DB_USER,
+
+  // Your password
+  password: process.env.DB_PASS,
+  database: process.env.DB_DATABASE
+});
+
 
   connection.connect(function(err) {
     if (err) throw err;

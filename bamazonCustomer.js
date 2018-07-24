@@ -3,23 +3,25 @@
 
 var mysql = require("mysql");
 var inquirer = require('inquirer');
+require('dotenv').config()
+
 var Table = require('cli-table');
 
 // var ui = new inquirer.ui.BottomBar();
 
 
 var connection = mysql.createConnection({
-    host: "localhost",
+    host: process.env.DB_HOST,
   
     // Your port; if not 3306
-    port: 3307,
+    port: process.env.DB_PORT,
   
     // Your username
-    user: "root",
+    user: process.env.DB_USER,
   
     // Your password
-    password: "mace00",
-    database: "bamazon"
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
   });
 
   connection.connect(function(err) {
