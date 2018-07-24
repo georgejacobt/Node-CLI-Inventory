@@ -162,8 +162,16 @@ var connection = mysql.createConnection({
   }
 
   function validateInput(input){
-    var reg = /^\d+$/;
+    // var reg = /^\d+$/;
+    var reg = /^[0-9][\.\d]*(,\d+)?$/;
    return reg.test(input) || "Entry should be a number!";
+  }
+
+  function validateNames(input){
+    
+    if (input === "") return false
+    else return true
+   
   }
 
   function checkData(){
@@ -250,5 +258,59 @@ var connection = mysql.createConnection({
 
   function addNewProduct(){
     console.log('Add New product');
+
+    inquirer
+    .prompt([
+      {
+        type: 'name',
+        name: 'prodName',
+        message: 'Enter name of product:',
+        validate: validateNames
+      },
+      {
+        type: 'name',
+        name: 'deptName',
+        message: 'Enter department Name:',
+        validate: validateNames
+      },
+      {
+        type: 'name',
+        name: 'price',
+        message: 'Enter unit price of product:',
+        validate: validateInput
+      },
+      {
+        type: 'name',
+        name: 'stock',
+        message: 'Enter stock available:',
+        validate: validateInput
+      },
+    ])
+    .then(answers => {
+      // console.log(JSON.stringify(answers, null, '  '));
+      var name = answers.prodName;
+      var department = answers.deptName;
+      var price = parseFloat(answers.price).toFixed(2);
+      var stock = parseInt(answers.stock);
+      var id;
+
+      console.log(name);
+      console.log(department);
+      console.log(price);
+      console.log(stock);
+
+     connection.query("INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES (?,?,?,?)",[name,department,price,stock], function(err, res) {
+      if (err) throw err;
+      id = res.insertId;
+      viewChangedInventory(id);
+    });
+
+    // connection.end();
+
+    });
+
+    
+
+    
   }
 })(); //Encapsulation by IIFE
